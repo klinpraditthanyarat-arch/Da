@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Chicken Hiro Marker</title>
+<script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+<style>
+body{margin:0;overflow:hidden;font-family:Arial,sans-serif;}
+.controls{position:fixed;bottom:20px;width:100%;text-align:center;z-index:999;}
+button{font-size:22px;padding:12px 24px;margin:8px;border:none;border-radius:12px;background:#ff9800;color:#fff;font-weight:bold;}
+</style>
+</head>
+<body>
+<div class="controls">
+<button onclick="walkChicken()">A : เดิน</button>
+<button onclick="flyChicken()">B : บิน</button>
+</div>
+<a-scene embedded arjs>
+<a-marker id="hiroMarker" preset="hiro">
+<a-entity id="chicken" position="0 0 0">
+<a-sphere position="0 0.6 0" radius="0.25" color="#ffffff"></a-sphere>
+<a-sphere position="0 0.95 0" radius="0.15" color="#ffffff"></a-sphere>
+<a-cone position="0 0.92 0.15" radius-bottom="0.04" radius-top="0" height="0.1" rotation="90 0 0" color="orange"></a-cone>
+<a-sphere position="-0.05 1.08 0" radius="0.03" color="red"></a-sphere>
+<a-sphere position="0 1.10 0" radius="0.03" color="red"></a-sphere>
+<a-sphere position="0.05 1.08 0" radius="0.03" color="red"></a-sphere>
+<a-sphere id="wingL" position="-0.22 0.6 0" radius="0.08" color="#eeeeee"></a-sphere>
+<a-sphere id="wingR" position="0.22 0.6 0" radius="0.08" color="#eeeeee"></a-sphere>
+<a-cylinder position="-0.08 0.2 0" radius="0.015" height="0.3" color="yellow"></a-cylinder>
+<a-cylinder position="0.08 0.2 0" radius="0.015" height="0.3" color="yellow"></a-cylinder>
+</a-entity>
+</a-marker>
+<a-entity camera></a-entity>
+</a-scene>
+<script>
+const chicken=document.getElementById('chicken');
+function walkChicken(){
+chicken.removeAttribute('animation__fly');
+chicken.setAttribute('animation__walk','property: position; from: 0 0 0; to: 1 0 0; dur: 2000; dir: alternate; loop: true');
+}
+function flyChicken(){
+chicken.removeAttribute('animation__walk');
+chicken.setAttribute('animation__fly','property: position; from: 0 0 0; to: 0 1 0; dur: 1200; dir: alternate; loop: true');
+wingL.setAttribute('animation','property: rotation; from:0 0 0; to:0 0 60; dur:200; dir:alternate; loop:true');
+wingR.setAttribute('animation','property: rotation; from:0 0 0; to:0 0 -60; dur:200; dir:alternate; loop:true');
+}
+</script>
+</body>
+</html>
